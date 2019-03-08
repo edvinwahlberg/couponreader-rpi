@@ -19,7 +19,7 @@ Console commands will be *italic*.\
 * Enable ssh
 * Enable console without login
 
-*reboot*\
+*reboot*
 > Follow [this guide](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) to set up passwordless ssh
 
 Uncomment the line beginning with: *deb-src*\
