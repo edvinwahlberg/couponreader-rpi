@@ -1,1 +1,1 @@
-# Couponreader application environment setup guide
+# Couponreader development environment setup guide
