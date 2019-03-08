@@ -14,13 +14,18 @@ Console commands will be **bold**.\
 **sudo rpi-update**\
 **reboot**\
 **sudo raspi-config**
-* Set the GPU memory to 256
-* Enable SSH
+* Set the available GPU memory to 256
+* Enable ssh
 * Enable console without login
 
 **reboot**\
 \
-Follow [this guide](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) to set up passwordless ssh
+Follow [this guide](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) to set up passwordless ssh\
+\
+Uncomment the line beginning with: *deb-src*\
+**sudo nano /etc/apt/sources.list**
 ## Building the required libraries on the Rpi
-> Enter the following
+Run the following commands.
+
+** **
 
