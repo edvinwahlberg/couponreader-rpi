@@ -20,8 +20,8 @@ Console commands will be *italic*.\
 * Enable console without login
 
 *reboot*\
-> Follow [this guide](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) to set up passwordless ssh\
-\
+> Follow [this guide](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) to set up passwordless ssh
+
 Uncomment the line beginning with: *deb-src*\
 \
 *sudo nano /etc/apt/sources.list*
@@ -43,5 +43,13 @@ Run the following commands. This will create the directories needed later\
 
 
 ## Setting up the Host Computer
-
+### Setting up the build environment
+Start out by making all the environment directories. The sysroot folder will be used to mimic the Rpi. It is therefore important that, you make sure that all object-files that are copied onto the Rpi, are compiled with a compiler that is compatible with the Rpi. Use the compilers in the raspberrypi toolset we will clone in this section.\
+\
+*mkdir ~/raspi ~/raspi/sysroot*\
+*cd ~/raspi*\
+*git clone https://github.com/raspberrypi/tools*\
+*mkdir sysroot sysroot/usr sysroot/opt*\
+#TODO: Skriv hur vi installerar Qt och ser till att det fungerar och sedan använder samma kompilator för att kompilera boost.
+### Installing Boost and exporting the lib-files to the Rpi
 *export PATH=$PATH:$HOME/raspberry/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin*
