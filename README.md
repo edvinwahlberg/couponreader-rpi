@@ -23,7 +23,6 @@ Console commands will be *italic*.\
 > Follow [this guide](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) to set up passwordless ssh
 
 Uncomment the line beginning with: *deb-src*\
-\
 *sudo nano /etc/apt/sources.list*
 ### Building the required libraries on the Rpi
 Run the following commands.
