@@ -1,12 +1,11 @@
 #ifndef SERIALHANDLER_H
 #define SERIALHANDLER_H
 
-#include "serialdao.h"
-
 #include <string>
 #include <vector>
 #include <QDebug>
 #include <tuple>
+#include <memory>
 
 #include <boost/asio.hpp>
 #include <boost/asio/serial_port.hpp>
@@ -14,7 +13,9 @@
 #include <boost/bind.hpp>
 #include <boost/chrono.hpp>
 
-const std::string USB_PORT{"/dev/ttyUSB0"};
+extern const std::string USB_PORT;
+
+#define BUFF_SIZE 128
 
 extern const char *ACTIVATE; //1
 extern const char *WAIT_FOR_COUPON; //2
@@ -34,24 +35,30 @@ public:
 
     bool open_port();
     bool close_port();
-    bool is_open() { return port.is_open(); }
+    bool is_open() const { return port.is_open(); }
     void start_readings();
     void stop_readings();
-    void get_coupon();
+    void wait_for_coupon();
     void start_motor();
     void stop_motor();
+    int size() { return readings->size(); }
+
+    std::shared_ptr<readings_deque>readings_ptr() { return readings; }
 
     static SerialHandler& instance();
     ~SerialHandler() { close_port(); }
 protected:
-    SerialHandler(const std::string& usb = USB_PORT) : io(), port(io), port_name(usb) {}
+    SerialHandler() :
+        io(), port(io),
+        readings(std::make_shared<readings_deque>(readings_deque()))
+    {
+    }
 private:
     void get_readings();
     io_service io;
     serial_port port;
-    const std::string port_name;
     bool currently_reading;
-    readings_deque readings;
+    std::shared_ptr<readings_deque> readings = nullptr;
     boost::thread sensor_thread;
 };
 

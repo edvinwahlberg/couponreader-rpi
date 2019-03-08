@@ -28,15 +28,21 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     serialhandler.cpp \
-    serialdao.cpp
+    readingsmodel.cpp \
+    sensorreadingswidget.cpp \
+    mechanicaltestingwidget.cpp
 
 HEADERS += \
         mainwindow.h \
     serialhandler.h \
-    serialdao.h
+    readingsmodel.h \
+    sensorreadingswidget.h \
+    mechanicaltestingwidget.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    sensorreadingswidget.ui \
+    mechanicaltestingwidget.ui
 
 INCLUDEPATH += /home/kirk/Downloads/boost_1_64_0/
 
