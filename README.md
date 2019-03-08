@@ -9,7 +9,7 @@ The host computer is running Ubuntu and the target is a Raspberry Pi 3 with a 7"
 ## Setting up the Rpi
 Download [Raspbian Strecth Lite](https://www.raspberrypi.org/downloads/raspbian/)
 
-### Setting up passwordless-ssh and the Rpi firmware
+### Setting up ssh and the Rpi firmware
 Console commands will be *italic*.\
 \
 *sudo rpi-update*\
@@ -19,11 +19,11 @@ Console commands will be *italic*.\
 * Enable ssh
 * Enable console without login
 
-**reboot**\
-\
-Follow [this guide](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) to set up passwordless ssh\
+*reboot*\
+> Follow [this guide](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) to set up passwordless ssh\
 \
 Uncomment the line beginning with: *deb-src*\
+\
 *sudo nano /etc/apt/sources.list*
 ### Building the required libraries on the Rpi
 Run the following commands.
