@@ -6,5 +6,6 @@
 * [yadoms - cross-compiling for rpi with boost](github.com/Yadoms/yadoms/wiki/Cross-compile-for-raspberry-PI)
 
 # Setting up the Raspberry Pi
-## Writing the raspbian image
-* [Download Raspbian Strecth Lite](https://www.raspberrypi.org/downloads/raspbian/)
+## Download the Raspbian Image
+> [Download Raspbian Strecth Lite](https://www.raspberrypi.org/downloads/raspbian/)
+
