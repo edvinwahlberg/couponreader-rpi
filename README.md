@@ -48,8 +48,8 @@ Start out by making all the environment directories. The sysroot folder will be 
 \
 *mkdir ~/raspi ~/raspi/sysroot*\
 *cd ~/raspi*\
-*git clone https://github.com/raspberrypi/tools*\
-*mkdir sysroot sysroot/usr sysroot/opt*\
+*git clone https://github.com/raspberrypi/tools* \
+*mkdir sysroot sysroot/usr sysroot/opt*
 # TODO: Skriv hur vi installerar Qt och ser till att det fungerar och sedan använder samma kompilator för att kompilera boost.
 ### Installing Boost and exporting the lib-files to the Rpi
 *export PATH=$PATH:$HOME/raspberry/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin*
