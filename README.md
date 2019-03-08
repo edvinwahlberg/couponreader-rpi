@@ -6,7 +6,7 @@
 * [yadoms - cross-compiling for rpi with boost](github.com/Yadoms/yadoms/wiki/Cross-compile-for-raspberry-PI)
 
 # Setting up the Rpi
-> [Download Raspbian Strecth Lite](https://www.raspberrypi.org/downloads/raspbian/)
+Download [Raspbian Strecth Lite](https://www.raspberrypi.org/downloads/raspbian/)
 
 ## Setting up passwordless-ssh and the Rpi firmware
 Console commands will be **bold**.\
