@@ -50,14 +50,27 @@ Start out by making all the environment directories. The sysroot folder will be 
 *cd ~/raspi*\
 *git clone https://github.com/raspberrypi/tools* \
 *mkdir sysroot sysroot/usr sysroot/opt*
-### Updating the compiler in raspberry/tools that will be used when compiling boost and qt.
+### Updating the compiler in ~/raspi/tools
 Download the compiler archive namned: *gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf* from [this page](https://releases.linaro.org/components/toolchain/binaries/latest-7/).\
 \
 Now move the contents of the directory ~/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/ to a different directory and
 copy the contents of the extracted archive into ~/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/.\
 \
-Now it's time to compile boost.
-### Installing Boost and exporting the lib-files to the Rpi
-*export PATH=$PATH:$HOME/raspberry/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin*
-asd
-dasdsa
+#### Compiling boost
+For more information, please check out [this guide](https://github.com/Yadoms/yadoms/wiki/Cross-compile-for-raspberry-PI).
+1. Export the path to the newly updated compiler to your $PATH.\
+**export PATH=$PATH:$HOME/raspberry/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin**
+2. Restart the terminal
+3. Download boost and extract it\
+**wget https://sourceforge.net/projects/boost/files/boost/desired_boost_version.bz2**
+4. Go into the extracted directory and run the following command\
+**./bootstrap.sh**
+5. Create a user-config.jam file and add the line in italic to it.\
+**nano ~/user-config.jam**\
+*using gcc : arm : arm-linux-gnueabihf-g++ ;*
+6. Now compile boost\
+**./b2 toolset=gcc-arm link=static cxxflags=-fPIC**\
+7. Remove the user-config.jam\
+**rm ~/user-config.jam**\
+Done!
+
