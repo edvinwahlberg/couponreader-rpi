@@ -139,3 +139,60 @@ pi@raspberry:~$ sudo ldconfig
 pi@raspberry:~$ reboot
 ```
 All compilations are done, now it's time to setup the gdbserver on the Rpi and Qt Creator.
+# Setting everything up
+## Setting Qt Creator up
+Download and install Qt Creator.
+### Now we'll set up the Rpi development kit.
+  1. **Tools -> Options -> Devices -> Devices Tab -> Add (a new Generic Linux Device)**\
+Enter the Rpi:s details.
+
+  2. **Tools -> Options -> Kits -> Compilers tab -> Add (GCC->C and GCC->C++)**\
+  Add the GCC and G++ compilers from the directory we used when compiling Qt. From this guide it would be:\
+  \
+  */home/kirk/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc*\
+   */home/kirk/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-g++*
+   
+ 3. **Tools -> Options -> Kits -> Debuggers tab -> Add**\
+  Select the GDB from the directory used when compiling qt. From this guide it would be:\
+ \
+ */home/kirk/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-gdb*
+ 
+ 4. **Tools -> Options -> Kits -> Qt Versions -> Add**\
+ Select the qmake located in the recently compiled qtdirectory. From this guide it would be\
+ \
+ */home/kirk/raspi/qt5/bin/qmake*
+ 
+ 5. **Tools -> Options -> Kits -> Kits tab -> Add (Enter the following settings)**
+  > Device type: Generic Linux Device\
+  > Device: *The name of the Raspberry Pi device we set up previously*\
+  > Sysroot: ~/raspi/sysroot\
+  > Compiler C: *the GCC-compiler we added previously*\
+  > Compiler C++: *the G++-compiler we added previously*\
+  > Debugger: *the GDB-debugger we added previously*\
+  > Qt version: *the Qt version we added previously*
+  
+## Setting up debugging with gdbserver running on the Rpi
+### Setting up the gdbserver
+```console
+pi@raspberry:~$ gdbserver :<PORT NR> <PROGRAM TO BE DEBUGGED>
+```
+### Making Qt Creator connect to the server
+In Qt Creator do the following:\
+**Debug -> Start Debugging -> Attach to running debug server**
+> Kit: the Rpi kit we setup.
+> Server Port: Your chosen server port
+> Local executable: The executable of the program on the Host PC
+
+## Editing the qmake file
+Now editing the qmake-file of the project you're cross-compiling. You have to add the following lines to make sure the boost libraries are linked properly and that Qt Creator recognizes the boost-libraries. 
+```qmake
+INCLUDEPATH += /path/on/host/pc/to/boost_1_XX_0/
+
+LIBS += -L/path/on/host/pc/to/lib/boost_1_XX_0/stage/lib -lboost_system (for example)
+
+target.path = /home/pi
+INSTALLS += target
+```
+## Problems that might occur in Qt Creator
+### The editor in Qt Creator does not recognize the Qt libraries in the code
+Go to **Help->About\ Plugins** and deactivate ClangCodeModel och ClangFormat.
