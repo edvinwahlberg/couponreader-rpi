@@ -1,6 +1,5 @@
 # Development environment setup guide
-This guide is for cross-compiling Qt programs using Boost.\
-The host computer is running Ubuntu and the target is a Raspberry Pi 3 running Raspbian Stretch Lite.
+This guide is for cross-compiling Qt programs using Boost. The host computer is running Ubuntu and the target is a Raspberry Pi 3 running Raspbian Stretch Lite.
 ### Guides used
 * [mechatronicsblog - cross compiling qt for rpi](https://mechatronicsblog.com/cross-compile-and-deploy-qt-5-12-for-raspberry-pi/)
 * [wiki.qt.io - cross compiling qt for rpi](https://wiki.qt.io/RaspberryPi2EGLFS)
