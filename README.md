@@ -182,7 +182,7 @@ In Qt Creator do the following:\
 > Server Port: Your chosen server port\
 > Local executable: The executable of the program on the Host PC
 
-## Editing the qmake file
+## Editing the qmake file of the project
 Now editing the qmake-file of the project you're cross-compiling. You have to add the following lines to make sure the boost libraries are linked properly and that Qt Creator recognizes the boost-libraries. 
 ```qmake
 INCLUDEPATH += /path/on/host/pc/to/boost_1_XX_0/
