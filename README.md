@@ -179,8 +179,8 @@ pi@raspberry:~$ gdbserver :<PORT NR> <PROGRAM TO BE DEBUGGED>
 ### Making Qt Creator connect to the server
 In Qt Creator do the following:\
 **Debug -> Start Debugging -> Attach to running debug server**
-> Kit: the Rpi kit we setup.
-> Server Port: Your chosen server port
+> Kit: the Rpi kit we setup.\
+> Server Port: Your chosen server port\
 > Local executable: The executable of the program on the Host PC
 
 ## Editing the qmake file
