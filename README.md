@@ -95,10 +95,14 @@ Now we just have to set-up the symlinks using a python-script.\
 The only Qt version I've tried to setup is 5.9 since it offers all the features I need. I'm sure later version can be made to work as well, but I haven't tested it.\
 \
 Download qt into the directory *~/raspi*\
-**git clone git://code.qt.io/qt/qtbase.git -b <5.9 or your desired version>**\
+```console
+git clone git://code.qt.io/qt/qtbase.git -b <5.9 or your desired version>\
+```
 \
-When the download is finished edit the file: ~/raspi/qtbase/mkspecs/devices/**your Rpi version**/qmake.conf\
+When the download is finished edit the file: *~/raspi/qtbase/mkspecs/devices/**your Rpi version**/qmake.conf*\
 and replace every occurence of **-lEGL** and **-LGLESv2** with **-lbrcmEGL** and **-lbrcmGLESv2** respectively.\
-From the directory ~/raspi/qtbase run the following command:\
-**/configure -release -opengl es2 -device linux-rasp-pi3-g++ -device-option CROSS_COMPILE=~/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf- -sysroot ~/raspi/sysroot -opensource -confirm-license -make libs -prefix /usr/local/qt5pi -extprefix ~/raspi/qt5pi -hostprefix ~/raspi/qt5 -no-use-gold-linker -v -no-gbm**\
-lallala
+From the directory ~/raspi/qtbase run the following command:
+```console
+./configure -release -opengl es2 -device linux-rasp-pi3-g++ -device-option CROSS_COMPILE=~/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf- -sysroot ~/raspi/sysroot -opensource -confirm-license -make libs -prefix /usr/local/qt5pi -extprefix ~/raspi/qt5pi -hostprefix ~/raspi/qt5 -no-use-gold-linker -v -no-gbm
+```
+Note that the compiler specified in the previous command is the same used to compile boost.
