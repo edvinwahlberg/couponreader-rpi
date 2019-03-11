@@ -193,6 +193,6 @@ LIBS += -L/path/on/host/pc/to/lib/boost_1_XX_0/stage/lib -lboost_system (for exa
 target.path = /home/pi
 INSTALLS += target
 ```
-## Problems that might occur in Qt Creator
-### The editor in Qt Creator does not recognize the Qt libraries in the code
+# Problems that might occur in Qt Creator
+## The editor in Qt Creator does not recognize the Qt libraries in the code
 Go to **Help->About\ Plugins** and deactivate ClangCodeModel och ClangFormat.
