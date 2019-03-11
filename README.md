@@ -5,6 +5,7 @@ The host computer is running Ubuntu and the target is a Raspberry Pi 3 with a 7"
 * [mechatronicsblog - cross compiling qt for rpi](https://mechatronicsblog.com/cross-compile-and-deploy-qt-5-12-for-raspberry-pi/)
 * [wiki.qt.io - cross compiling qt for rpi](https://wiki.qt.io/RaspberryPi2EGLFS)
 * [yadoms - cross-compiling for rpi with boost](https://github.com/Yadoms/yadoms/wiki/Cross-compile-for-raspberry-PI)
+* [Updating the compiler included in raspberrypi/tools](https://mechatronicsblog.com/cross-compile-and-deploy-qt-5-12-for-raspberry-pi/#comment-21)
 
 ## Setting up the Rpi
 Download [Raspbian Strecth Lite](https://www.raspberrypi.org/downloads/raspbian/)
@@ -49,6 +50,14 @@ Start out by making all the environment directories. The sysroot folder will be 
 *cd ~/raspi*\
 *git clone https://github.com/raspberrypi/tools* \
 *mkdir sysroot sysroot/usr sysroot/opt*
-# TODO: Skriv hur vi installerar Qt och ser till att det fungerar och sedan använder samma kompilator för att kompilera boost.
+### Updating the compiler in raspberry/tools that will be used when compiling boost and qt.
+Download the compiler archive namned: *gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf* from [this page](https://releases.linaro.org/components/toolchain/binaries/latest-7/).\
+\
+Now move the contents of the directory ~/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/ to a different directory and
+copy the contents of the extracted archive into ~/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/.\
+\
+Now it's time to compile boost.
 ### Installing Boost and exporting the lib-files to the Rpi
 *export PATH=$PATH:$HOME/raspberry/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin*
+asd
+dasdsa
