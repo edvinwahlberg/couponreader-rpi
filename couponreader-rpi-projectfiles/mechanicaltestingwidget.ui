@@ -100,6 +100,9 @@ background-color:rgb(211, 215, 207)
          <height>50</height>
         </size>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string>START MOTOR</string>
        </property>
@@ -112,6 +115,9 @@ background-color:rgb(211, 215, 207)
          <width>100</width>
          <height>50</height>
         </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
         <string>STOP MOTOR</string>
@@ -138,6 +144,9 @@ background-color:rgb(211, 215, 207)
          <width>100</width>
          <height>50</height>
         </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
        </property>
        <property name="text">
         <string>FEED COUPON</string>

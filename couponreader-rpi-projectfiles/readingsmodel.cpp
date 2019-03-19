@@ -1,16 +1,11 @@
 #include "readingsmodel.h"
-#include "serialhandler.h"
 
-ReadingsModel::ReadingsModel(QObject *parent) :
-    QAbstractTableModel(parent), handler(SerialHandler::instance())
-{
-
-}
+ReadingsModel::ReadingsModel(QObject *parent) : QAbstractTableModel(parent) { }
 
 int ReadingsModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return handler.size();
+    return 0;
 }
 int ReadingsModel::columnCount(const QModelIndex &parent) const
 {
@@ -42,7 +37,7 @@ QVariant ReadingsModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid())
         return QVariant();
-    if (index.row() >= handler.size() || index.row() < 0)
+    if (index.row() >= 1 || index.row() < 0)
         return QVariant();
     if (role == Qt::DisplayRole) {
     }

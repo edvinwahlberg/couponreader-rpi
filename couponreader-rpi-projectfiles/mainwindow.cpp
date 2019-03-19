@@ -7,9 +7,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //ui->tabWidget->setTabEnabled(SENS_TAB, false);
+    connect(ui->mech_tab, SIGNAL(alterTab(int,bool)), this, SLOT(setTab(int, bool)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setTab(int t, bool b)
+{
+    ui->tabWidget->setTabEnabled(t, b);
 }

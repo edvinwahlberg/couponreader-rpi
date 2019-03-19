@@ -27,17 +27,20 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    serialhandler.cpp \
     readingsmodel.cpp \
     sensorreadingswidget.cpp \
     mechanicaltestingwidget.cpp
 
 HEADERS += \
         mainwindow.h \
-    serialhandler.h \
     readingsmodel.h \
     sensorreadingswidget.h \
-    mechanicaltestingwidget.h
+    mechanicaltestingwidget.h \
+    serialcom_base.h \
+    serialcom_output.h \
+    serialcom_input.h \
+    serialcom_handler.h \
+    sensor_reading.h
 
 FORMS += \
         mainwindow.ui \

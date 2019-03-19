@@ -3,8 +3,9 @@
 
 #include <QAbstractTableModel>
 #include <memory>
+#include <QVector>
 
-class SerialHandler;
+#include "serialcom_handler.h"
 
 class ReadingsModel : public QAbstractTableModel
 {
@@ -20,7 +21,7 @@ signals:
 
 public slots:
 private:
-    SerialHandler &handler;
+   // Serialcom_handler<sensor_reading> &readings_dao_;
 };
 
 #endif // READINGSMODEL_H
