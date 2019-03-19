@@ -195,3 +195,16 @@ INSTALLS += target
 # Problems that might occur
 ## The editor in Qt Creator does not recognize the Qt libraries in the code
 Go to **Help->About\ Plugins** and deactivate ClangCodeModel och ClangFormat.
+
+## Set physical width and height of the Rpi screen.
+```console
+pi@raspberry:~$ sudo nano ~/.profile
+```
+Add the following two lines to the file.
+ > export QT_QPA_EGLFS_PHYSICAL_WIDTH=<YOUR SCREEN'S WIDTH IN MILLIMETERS>\
+ > export QT_QPA_EGLFS_PHYSICAL_HEIGHT=<YOUR SCREEN'S HEIGHT IN MILLIMETERS>
+ 
+Write out and run the command:
+```console
+pi@raspberry:~$ source ~/.profile
+```
