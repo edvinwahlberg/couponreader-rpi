@@ -7,6 +7,7 @@
 
 #include <functional>
 #include <utility>
+#include <thread>
 
 template <typename T>
 class Serialcom_handler : public Serialcom_input<T>, public Serialcom_output<T>
@@ -23,6 +24,9 @@ protected:
     ~Serialcom_handler() = default;
     Serialcom_handler(const Serialcom_handler<T>&) = delete;
     Serialcom_handler<T>& operator=(const Serialcom_handler<T>&) = delete;
+private:
+    std::thread write_thread; // TODO: implement
+    std::thread read_thread; // TODO: implement
 };
 
 #endif // SERIALCOM_HANDLER_H
