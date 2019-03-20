@@ -5,8 +5,10 @@
 #include <memory>
 #include <QVector>
 
+#include "sensor_reading.h"
 #include "serialcom_handler.h"
 
+extern template class Serialcom_handler<sensor_reading>;
 class ReadingsModel : public QAbstractTableModel
 {
     Q_OBJECT
@@ -21,7 +23,8 @@ signals:
 
 public slots:
 private:
-   // Serialcom_handler<sensor_reading> &readings_dao_;
+   Serialcom_handler<sensor_reading> &handler;
+   QVector<sensor_reading> results;
 };
 
 #endif // READINGSMODEL_H

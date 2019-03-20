@@ -6,6 +6,8 @@
 #include "serialcom_handler.h"
 #include "sensor_reading.h"
 
+extern template class Serialcom_handler<sensor_reading>;
+
 namespace Ui {
 class MechanicalTestingWidget;
 }
@@ -21,7 +23,7 @@ public:
     ~MechanicalTestingWidget();
 
 signals:
-    void alterTab(int tab, bool enabled);
+    void toggle_tab(int tab, bool enabled);
 private slots:
     void start();
     void stop();

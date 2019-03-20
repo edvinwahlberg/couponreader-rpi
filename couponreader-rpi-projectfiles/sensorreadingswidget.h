@@ -3,12 +3,12 @@
 #include <QWidget>
 
 #include "sensor_reading.h"
+#include "serialcom_handler.h"
+
+extern template class Serialcom_handler<sensor_reading>;
 namespace Ui {
 class SensorReadingsWidget;
 }
-
-template <typename T>
-class Serialcom_handler;
 
 class SensorReadingsWidget : public QWidget
 {
@@ -21,6 +21,8 @@ class SensorReadingsWidget : public QWidget
 public:
     explicit SensorReadingsWidget(QWidget *parent = nullptr);
     ~SensorReadingsWidget();
+signals:
+    void toggle_tab(int tab, bool enabled);
 private slots:
     void start();
     void stop();

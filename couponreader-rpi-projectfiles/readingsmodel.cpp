@@ -1,6 +1,6 @@
 #include "readingsmodel.h"
 
-ReadingsModel::ReadingsModel(QObject *parent) : QAbstractTableModel(parent) { }
+ReadingsModel::ReadingsModel(QObject *parent) : QAbstractTableModel(parent), handler(Serialcom_handler<sensor_reading>::instance()) { }
 
 int ReadingsModel::rowCount(const QModelIndex &parent) const
 {

@@ -20,7 +20,7 @@ MechanicalTestingWidget::~MechanicalTestingWidget()
 
 void MechanicalTestingWidget::start()
 {
-    emit alterTab(TABS::SENS_TAB, false);
+    emit toggle_tab(TABS::SENS_TAB, false);
     handler.write(std::string("START"));
     ui->start_btn->setEnabled(false);
     ui->feed_btn->setEnabled(false);
@@ -28,7 +28,7 @@ void MechanicalTestingWidget::start()
 
 void MechanicalTestingWidget::stop()
 {
-    emit alterTab(TABS::SENS_TAB, true);
+    emit toggle_tab(TABS::SENS_TAB, true);
     handler.write(std::string("STOP"));
     ui->start_btn->setEnabled(true);
     ui->feed_btn->setEnabled(true);
@@ -36,7 +36,7 @@ void MechanicalTestingWidget::stop()
 
 void MechanicalTestingWidget::feed()
 {
-    emit alterTab(TABS::SENS_TAB, false);
+    emit toggle_tab(TABS::SENS_TAB, false);
     handler.write({"ACTIVATE", "FEED"}, 500);
-    emit alterTab(0, true);
+    emit toggle_tab(0, true);
 }

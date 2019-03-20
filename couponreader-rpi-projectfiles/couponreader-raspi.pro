@@ -37,10 +37,9 @@ HEADERS += \
     sensorreadingswidget.h \
     mechanicaltestingwidget.h \
     serialcom_base.h \
-    serialcom_output.h \
-    serialcom_input.h \
     serialcom_handler.h \
-    sensor_reading.h
+    sensor_reading.h \
+    serialcom_io.h
 
 FORMS += \
         mainwindow.ui \

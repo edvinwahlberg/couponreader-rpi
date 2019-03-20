@@ -4,22 +4,20 @@
 #include <boost/lockfree/spsc_queue.hpp>
 #include <boost/asio.hpp>
 #include <boost/asio/serial_port.hpp>
-#include <boost/lockfree/spsc_queue.hpp>
-#include <boost/asio/buffer.hpp>
+#include <mutex>
 
 template <typename T>
 class Serialcom_base
 {
     using serial_port = boost::asio::serial_port;
     using io_service = boost::asio::io_service;
-    using spsc_queue = boost::lockfree::spsc_queue<T, boost::lockfree::capacity<1024> >;
-public:
+protected:
     Serialcom_base() :
-        io_(), port_(io_), readings_(), port_name_("/dev/ttyUSB0"){ }
+        io_(), port_(io_), port_name_("/dev/ttyUSB0"){ }
 
     Serialcom_base(const std::string &port_name) :
-        io_(), port_(io_), readings_(), port_name_(port_name){ }
-
+        io_(), port_(io_), port_name_(port_name){ }
+    ~Serialcom_base() { if (is_open()) close();}
     bool open() {
         port_.open(port_name_);
         return port_.is_open();
@@ -32,10 +30,8 @@ public:
     {
         return port_.is_open();
     }
-protected:
     io_service io_;
     serial_port port_;
-    spsc_queue readings_;
     std::string port_name_;
 };
 
