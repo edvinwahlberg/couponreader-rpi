@@ -1,11 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "readingsmodel.h"
-#include "serialcom_handler.h"
-#include "sensor_reading.h"
-
 template class Serialcom_handler<sensor_reading>;
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)

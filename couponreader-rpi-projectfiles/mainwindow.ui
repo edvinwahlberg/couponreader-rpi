@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>709</width>
+    <height>411</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,44 +24,32 @@ background-color: rgb(238, 238, 236)
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QFrame" name="frame">
-      <property name="maximumSize">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="minimumSize">
        <size>
-        <width>800</width>
-        <height>480</height>
+        <width>0</width>
+        <height>0</height>
        </size>
       </property>
-      <property name="frameShape">
-       <enum>QFrame::WinPanel</enum>
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
       </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QTabWidget" name="tabWidget">
-         <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <widget class="SensorReadingsWidget" name="sensor_tab">
-          <attribute name="title">
-           <string>Sensor testing</string>
-          </attribute>
-         </widget>
-         <widget class="MechanicalTestingWidget" name="mech_tab">
-          <attribute name="title">
-           <string>Mechanical testing</string>
-          </attribute>
-         </widget>
-        </widget>
-       </item>
-      </layout>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="SensorReadingsWidget" name="sensor_tab">
+       <attribute name="title">
+        <string>Sensor testing</string>
+       </attribute>
+      </widget>
+      <widget class="MechanicalTestingWidget" name="mech_tab">
+       <attribute name="title">
+        <string>Mechanical testing</string>
+       </attribute>
+      </widget>
      </widget>
     </item>
    </layout>

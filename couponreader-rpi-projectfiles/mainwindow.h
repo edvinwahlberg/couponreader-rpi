@@ -2,7 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "sensor_reading.h"
+#include "serialcom_handler.h"
 
+extern template class Serialcom_handler<sensor_reading>;
 namespace Ui {
 class MainWindow;
 }
@@ -13,8 +16,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void disable_mech_tab() { }
-    void disable_sens_tab() { }
 public slots:
     void setTab(int, bool);
 private:

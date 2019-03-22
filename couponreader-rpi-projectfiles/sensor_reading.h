@@ -9,11 +9,17 @@ struct sensor_reading {
     sensor_reading(const std::string &s) {
         std::regex r("[\\n]{1}[\\s]*([\\d]+)[\\s]+([\\d]+)[\\s]+([\\d]+)[\\s]+([\\d]+)[\\s]*[\\r]{1}");
         std::smatch m;
-        std::regex_search(s, m, r);
-        s1_ = std::stoi(m.str(1));
-        s2_ = std::stoi(m.str(2));
-        s3_ = std::stoi(m.str(3));
-        s4_ = std::stoi(m.str(4));
+        if (std::regex_search(s, m, r)) {
+            s1_ = std::stoi(m.str(1));
+            s2_ = std::stoi(m.str(2));
+            s3_ = std::stoi(m.str(3));
+            s4_ = std::stoi(m.str(4));
+        } else {
+            s1_ = -1;
+            s2_ = -1;
+            s3_ = -1;
+            s4_ = -1;
+        }
         std::cout << "sensor_reading{" << s1_ << ", " << s2_ << ", " << s3_ << ", " << s4_ << "}" << std::endl;
     }
     sensor_reading(int s1, int s2, int s3, int s4) : s1_(s1), s2_(s2), s3_(s3), s4_(s4) { }

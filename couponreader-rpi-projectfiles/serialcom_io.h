@@ -9,6 +9,7 @@
 #include <thread>
 #include <regex>
 #include <iterator>
+#include <QVector>
 
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
@@ -17,7 +18,7 @@
 #define QUEUE_CAPACITY 1024
 #define BUFF_SIZE 64
 
-template <typename T>
+template <typename T, template <typename, typename...> class Container = QVector>
 class Serialcom_io : virtual public Serialcom_base<T>
 {
     using commands_map = std::map<const std::string, const unsigned char>;
@@ -50,14 +51,15 @@ protected:
     void get_readings(const std::string start_command, const std::string stop_command, const std::string regex_pattern);
 
     spsc_size_type num_available_reads() { return readings_.read_available(); }
+    void consumer_read_spsc(Container<T>&);
 private:
     commands_map commands_;
     spsc_queue readings_;
     bool read_flag = false;
 };
 
-template <typename T>
-bool Serialcom_io<T>::write_command(const std::string command, std::size_t sleep_ms)
+template <typename T, template <typename, typename...> class Container>
+bool Serialcom_io<T, Container>::write_command(const std::string command, std::size_t sleep_ms)
 {
     if (!is_open())
         open();
@@ -78,8 +80,8 @@ bool Serialcom_io<T>::write_command(const std::string command, std::size_t sleep
     return false;
 }
 
-template <typename T>
-bool Serialcom_io<T>::write_command(const std::initializer_list<const std::string> commands, std::size_t sleep_ms)
+template <typename T, template <typename, typename...> class Container>
+bool Serialcom_io<T, Container>::write_command(const std::initializer_list<const std::string> commands, std::size_t sleep_ms)
 {
     if (!is_open())
         open();
@@ -105,8 +107,8 @@ bool Serialcom_io<T>::write_command(const std::initializer_list<const std::strin
     return false;
 }
 
-template <typename T>
-void Serialcom_io<T>::get_readings(const std::string start_command, const std::string stop_command, const std::string regex_pattern)
+template <typename T, template <typename, typename...> class Container>
+void Serialcom_io<T, Container>::get_readings(const std::string start_command, const std::string stop_command, const std::string regex_pattern)
 {
     //TODO: fixa sa att om den når maxkapaciteten att den på något sätt signalerar och säger att den är färdig. annars kommer start-knappen vara låst för alltid.
     if (is_open()) {
@@ -147,5 +149,19 @@ void Serialcom_io<T>::get_readings(const std::string start_command, const std::s
     c = commands_.at(stop_command);
     boost::asio::write( port_, boost::asio::buffer(&c, 1) );
     if (is_open()) close();
+}
+
+template <typename T, template <typename, typename...> class Container>
+void Serialcom_io<T, Container>::consumer_read_spsc(Container<T>& v)
+{
+    while (read_flag)
+    {
+        if (readings_.read_available()) {
+            T ret;
+            readings_.pop(ret);
+            v.push_back(ret);
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
 }
 #endif // SERIALCOM_IO_H
