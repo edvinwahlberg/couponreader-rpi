@@ -10,6 +10,7 @@
 #include <regex>
 #include <iterator>
 #include <QVector>
+#include <functional>
 
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
@@ -51,7 +52,7 @@ protected:
     void get_readings(const std::string start_command, const std::string stop_command, const std::string regex_pattern);
 
     spsc_size_type num_available_reads() { return readings_.read_available(); }
-    void consumer_read_spsc(Container<T>&);
+    void consumer_read_spsc(Container<T>*, auto (Container<T>::*push)(T&& e) -> void);
 private:
     commands_map commands_;
     spsc_queue readings_;
@@ -152,16 +153,18 @@ void Serialcom_io<T, Container>::get_readings(const std::string start_command, c
 }
 
 template <typename T, template <typename, typename...> class Container>
-void Serialcom_io<T, Container>::consumer_read_spsc(Container<T>& v)
+void Serialcom_io<T, Container>::consumer_read_spsc(Container<T> *v, auto (Container<T>::*p)(T && e) -> void)
 {
     while (read_flag)
     {
         if (readings_.read_available()) {
             T ret;
             readings_.pop(ret);
-            v.push_back(ret);
+           // std::invoke(push, v, std::move(ret));
+            (v->*p)(std::move(ret));
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
+   // return T{0,0,0,0};
 }
 #endif // SERIALCOM_IO_H

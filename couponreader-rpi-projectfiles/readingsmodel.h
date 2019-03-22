@@ -21,14 +21,14 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation = Qt::Horizontal,
                         int role = Qt::DisplayPropertyRole) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-    QVector<sensor_reading>& get_results() { return results; }
+    QVector<sensor_reading>* get_results() { return results; }
 signals:
 
 public slots:
     void read_from_spsc();
 private:
    Serialcom_handler<sensor_reading> &handler;
-   QVector<sensor_reading> results;
+   QVector<sensor_reading> *results;
 };
 
 #endif // READINGSMODEL_H

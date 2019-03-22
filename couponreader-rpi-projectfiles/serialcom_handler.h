@@ -29,7 +29,7 @@ public:
     void write (std::initializer_list<const std::string> commands, const std::size_t sleep_ms = 100) { write_command(commands, sleep_ms); }
 
     //Denna funktion borde också spawna tråden som läser IFRÅN SPSC också.
-    void start_readings (const std::string, const std::string, const std::string, Container<T>&);
+    void start_readings (const std::string, const std::string, const std::string, Container<T>*, auto (Container<T>::*push)(T&& e) -> void);
 
     //Denna funktion kommer döda båda så borde därför joina båda.
     void stop_readings () { negate_read_flag(); producer_thread.join(); consumer_thread.join(); } // consumer_thread.join(); }
@@ -42,25 +42,25 @@ protected:
         Serialcom_base<T>::Serialcom_base("/dev/ttyUSB0")
     { }
     ~Serialcom_handler() = default;
-    Serialcom_handler(const Serialcom_handler<T, Container>&) = delete;
+    Serialcom_handler(Serialcom_handler<T, Container>&) = delete;
     Serialcom_handler<T, Container>& operator=(const Serialcom_handler<T, Container>&) = delete;
 private:
     void start(const std::string& start_command, const std::string& stop_command, const std::string& regex_pattern)
     {  get_readings(start_command, stop_command, regex_pattern); }
-    void read_all(Container<T>& v) { consumer_read_spsc(v); }
+    void read_all(Container<T> *v, auto (Container<T>::*push)(T&& e) -> void) { consumer_read_spsc(v, push);}
     std::thread consumer_thread; // TODO: implement
     std::thread producer_thread; // TODO: implement
 };
 
 template <typename T, template <typename, typename...> class Container>
 void Serialcom_handler<T, Container>::start_readings
-(const std::string start_command, const std::string stop_command, const std::string regex_pattern, Container<T> &v)
+(const std::string start_command, const std::string stop_command, const std::string regex_pattern, Container<T> *v, auto (Container<T>::*push)(T&& e) -> void)
 {
     negate_read_flag();
     producer_thread = std::thread(&Serialcom_handler<T, Container>::start,
                                   this, start_command, stop_command, regex_pattern);
     consumer_thread = std::thread(&Serialcom_handler<T, Container>::read_all,
-                                  this, std::ref(v));
+                                  this, v, push);
 }
 
 #endif // SERIALCOM_HANDLER_H

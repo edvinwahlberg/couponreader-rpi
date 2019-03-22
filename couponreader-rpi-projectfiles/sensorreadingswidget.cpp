@@ -34,7 +34,7 @@ void SensorReadingsWidget::start()
     ui->stop_sensor_btn->setEnabled(true);
     emit toggle_tab(TABS::MECH_TAB, false);
     emit readings_started();
-    handler.start_readings("SENSOR_ON", "SENSOR_OFF", "[\\n]{1}[\\s]*([\\d]+)[\\s]+([\\d]+)[\\s]+([\\d]+)[\\s]+([\\d]+)[\\s]*[\\r]{1}", model->get_results());
+    handler.start_readings("SENSOR_ON", "SENSOR_OFF", "[\\n]{1}[\\s]*([\\d]+)[\\s]+([\\d]+)[\\s]+([\\d]+)[\\s]+([\\d]+)[\\s]*[\\r]{1}", model->get_results(), &QVector<sensor_reading>::push_back);
 }
 
 void SensorReadingsWidget::stop(){
@@ -42,6 +42,6 @@ void SensorReadingsWidget::stop(){
     QVector<sensor_reading> lol;
     //handler.read_available(lol);
     ui->start_sensor_btn->setEnabled(true);
-    qDebug() << model->get_results().size();
+    qDebug() << model->get_results()->size();
     emit toggle_tab(TABS::MECH_TAB, true);
 }
