@@ -22,7 +22,9 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation = Qt::Horizontal,
                         int role = Qt::DisplayPropertyRole) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+   // bool setData(const QModelIndex &index, const QVariant &value, int role) override;
+
+    QModelIndex addSensorReading(const sensor_reading&);
     QVector<sensor_reading>* get_results() { return results; }
     QModelIndex push_back_results(sensor_reading e)
     {

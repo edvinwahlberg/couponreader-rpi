@@ -65,11 +65,14 @@ QVariant ReadingsModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-bool ReadingsModel::setData(const QModelIndex &index, const QVariant &value, int role)
+
+QModelIndex ReadingsModel::addSensorReading(const sensor_reading& new_reading)
 {
-    if(!isIndexValid(index))
-        return QVariant();
-    const sensor_reading& ret = results->at(index.row());
+    int rowIndex = rowCount();
+    beginInsertRows(QModelIndex(), rowIndex, rowIndex);
+    results->push_back(std::move(new_reading));
+    endInsertRows();
+    return index(rowIndex, 0);
 }
 
 bool ReadingsModel::isIndexValid(const QModelIndex& index) const
