@@ -40,10 +40,12 @@ public:
     static SerialcomHandler& instance() { static SerialcomHandler<T> singleton; return singleton; }
     void open ();
     void close ();
-    bool is_open () {return port_.is_open(); }
+    bool is_open () const {return port_.is_open(); }
 
     void setPortName (const std::string &s) { port_name_ = s; }
     void setRegexPattern (const std::string& s) { regex_pattern_ = s; }
+
+    bool is_reading() const { return reading_flag_; }
 
     void add_commands (command_type &c) { commands_.insert(c); }
     void add_commands (std::initializer_list<command_type> il) { commands_.insert(il.begin(), il.end()); }
@@ -52,7 +54,7 @@ public:
 
     void write_commands (const std::initializer_list<const std::string>, std::size_t sleep_ms = SLEEP::LONG, bool close_when_done = true);
 
-    size_type available_reads () { return readings_.read_available(); }
+    size_type available_reads () const { return readings_.read_available(); }
 
     void start_sensors(command_pair c);
     void stop_sensors();

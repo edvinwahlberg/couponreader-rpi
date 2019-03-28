@@ -22,6 +22,7 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation = Qt::Horizontal,
                         int role = Qt::DisplayPropertyRole) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
     QVector<sensor_reading>* get_results() { return results; }
     QModelIndex push_back_results(sensor_reading e)
     {
@@ -42,6 +43,8 @@ signals:
 
 public slots:
     void read_from_spsc();
+private:
+    bool isIndexValid(const QModelIndex&) const;
 private:
    SerialcomHandler<sensor_reading> &handler;
    QVector<sensor_reading> *results;

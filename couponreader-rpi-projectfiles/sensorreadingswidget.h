@@ -29,7 +29,7 @@ private slots:
     void stop();
 private:
     Ui::SensorReadingsWidget *ui;
-    ReadingsModel *model;
+    ReadingsModel* model;
     SerialcomHandler<sensor_reading> &handler;
 };
 

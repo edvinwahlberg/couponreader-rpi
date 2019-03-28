@@ -65,6 +65,22 @@ QVariant ReadingsModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
+bool ReadingsModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if(!isIndexValid(index))
+        return QVariant();
+    const sensor_reading& ret = results->at(index.row());
+}
+
+bool ReadingsModel::isIndexValid(const QModelIndex& index) const
+{
+    if (index.row() < 0
+            || index.row() >= rowCount()
+            || !index.isValid())
+        return false;
+    return true;
+}
+
 void ReadingsModel::read_from_spsc()
 {
   //  handler.start_read_spsc(results);

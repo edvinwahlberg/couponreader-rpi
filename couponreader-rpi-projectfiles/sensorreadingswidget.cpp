@@ -38,7 +38,6 @@ SensorReadingsWidget::SensorReadingsWidget(QWidget *parent) :
 SensorReadingsWidget::~SensorReadingsWidget()
 {
     delete ui;
-    delete model;
 }
 
 void SensorReadingsWidget::start()
@@ -50,8 +49,8 @@ void SensorReadingsWidget::start()
     handler.start_sensors(std::make_pair("SENSOR_ON", "SENSOR_OFF"));
 }
 
-void SensorReadingsWidget::stop()
-{
+void SensorReadingsWidget::stop(){
+
     ui->start_sensor_btn->setEnabled(true);
     qDebug() << model->get_results()->size();
     emit toggle_tab(TABS::MECH_TAB, true);

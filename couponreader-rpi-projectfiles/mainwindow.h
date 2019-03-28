@@ -2,9 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "sensor_reading.h"
-#include "serialcom_handler.h"
-
 
 namespace Ui {
 class MainWindow;
