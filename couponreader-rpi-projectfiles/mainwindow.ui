@@ -38,7 +38,7 @@ background-color: rgb(238, 238, 236)
        <string notr="true"/>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="SensorReadingsWidget" name="sensor_tab">
        <attribute name="title">

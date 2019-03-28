@@ -3,10 +3,9 @@
 
 #include <QWidget>
 
-#include "serialcom_handler.h"
 #include "sensor_reading.h"
 
-extern template class Serialcom_handler<sensor_reading>;
+#include "serialcomhandler.h"
 
 namespace Ui {
 class MechanicalTestingWidget;
@@ -28,9 +27,10 @@ private slots:
     void start();
     void stop();
     void feed();
+    void disconnect();
 private:
     Ui::MechanicalTestingWidget *ui;
-    Serialcom_handler<sensor_reading>& handler;
+    SerialcomHandler<sensor_reading>& handler;
 };
 
 #endif // MECHANICALTESTINGWIDGET_H

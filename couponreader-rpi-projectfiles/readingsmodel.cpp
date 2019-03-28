@@ -2,8 +2,9 @@
 #include "sensorreadingswidget.h"
 #include <thread>
 
+extern template class SerialcomHandler<sensor_reading>;
 ReadingsModel::ReadingsModel(QObject *parent) :
-    QAbstractTableModel(parent), handler(Serialcom_handler<sensor_reading>::instance()), results(new QVector<sensor_reading>) {
+    QAbstractTableModel(parent), handler(SerialcomHandler<sensor_reading>::instance()), results(new QVector<sensor_reading>) {
    // connect(parent, &SensorReadingsWidget::readings_started, this, &ReadingsModel::read_from_spsc);
     results->reserve(100);
 }
@@ -47,16 +48,16 @@ QVariant ReadingsModel::data(const QModelIndex& index, int role) const
     if (index.row() >= results->size() || index.row() < 0)
         return QVariant();
     if (role == Qt::DisplayRole) {
-        const sensor_reading& tmp = results->at(index.row());
+        std::shared_ptr<sensor_reading> tmp = get_at(index.row());
         switch (index.column()) {
             case 0:
-                return tmp.s1_;
+                return tmp->s1_;
             case 1:
-                return tmp.s2_;
+                return tmp->s2_;
             case 2:
-                return tmp.s3_;
+                return tmp->s3_;
             case 3:
-                return tmp.s4_;
+                return tmp->s4_;
             default:
                 return QVariant();
         }

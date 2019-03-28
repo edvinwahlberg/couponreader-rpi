@@ -138,6 +138,22 @@ background-color:rgb(211, 215, 207)
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="disc_btn">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>DISCONNECT</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="feed_btn">
        <property name="minimumSize">
         <size>

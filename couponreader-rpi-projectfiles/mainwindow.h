@@ -5,7 +5,7 @@
 #include "sensor_reading.h"
 #include "serialcom_handler.h"
 
-extern template class Serialcom_handler<sensor_reading>;
+
 namespace Ui {
 class MainWindow;
 }

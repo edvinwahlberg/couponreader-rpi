@@ -3,18 +3,17 @@
 #include <QWidget>
 
 #include "sensor_reading.h"
-#include "serialcom_handler.h"
+#include "serialcomhandler.h"
 
 class ReadingsModel;
-extern template class Serialcom_handler<sensor_reading>;
+
 namespace Ui {
 class SensorReadingsWidget;
 }
-
+extern const std::string g_PATTERN;
 class SensorReadingsWidget : public QWidget
 {
     Q_OBJECT
-
     enum TABS {
         MECH_TAB = 1
     };
@@ -24,13 +23,14 @@ public:
 signals:
     void toggle_tab(int tab, bool enabled);
     void readings_started();
+    void readings_stopped();
 private slots:
     void start();
     void stop();
 private:
     Ui::SensorReadingsWidget *ui;
-    Serialcom_handler<sensor_reading> &handler;
     ReadingsModel *model;
+    SerialcomHandler<sensor_reading> &handler;
 };
 
 #endif // SENSORREADINGSWIDGET_H
