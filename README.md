@@ -61,9 +61,9 @@ Now move the contents of the directory ~/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-l
 copy the contents of the extracted archive into ~/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/
 ## Compiling boost
 For more information, please check out [this guide](https://github.com/Yadoms/yadoms/wiki/Cross-compile-for-raspberry-PI).
-1. Export the path to the newly updated compiler to your $PATH.
+1. Add the following line to your .bashrc-file in the $HOME directory.
 ```console
-user@hostpc:~$ export PATH=$PATH:$HOME/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin
+PATH=$PATH:$HOME/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin
 ```
 2. Restart the terminal
 3. Download boost and extract it
