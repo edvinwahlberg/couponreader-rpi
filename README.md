@@ -52,7 +52,7 @@ Start out by making all the environment directories. The sysroot folder will be 
 user@hostpc:~$ mkdir ~/raspi ~/raspi/sysroot
 user@hostpc:~$ cd ~/raspi
 user@hostpc:~$ git clone https://github.com/raspberrypi/tools
-user@hostpc:~$ mkdir sysroot sysroot/usr sysroot/opt
+user@hostpc:~$ mkdir sysroot/usr sysroot/opt
 ```
 ## Updating the compiler in ~/raspi/tools
 Download the compiler archive namned: *gcc-linaro-7.4.1-2019.02-x86_64_arm-linux-gnueabihf* from [this page](https://releases.linaro.org/components/toolchain/binaries/latest-7/).\
