@@ -24,7 +24,7 @@ public:
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
    // bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
-    QModelIndex addSensorReading(const sensor_reading&);
+    QModelIndex addSensorReading(sensor_reading&&);
     QVector<sensor_reading>* get_results() { return results; }
     QModelIndex push_back_results(sensor_reading e)
     {
@@ -41,10 +41,9 @@ public:
 
         return std::make_shared<sensor_reading>(results->at(i));
     }
-signals:
 
-public slots:
-    void read_from_spsc();
+    void clear();
+
 private:
     bool isIndexValid(const QModelIndex&) const;
 private:

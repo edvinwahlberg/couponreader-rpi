@@ -1,6 +1,7 @@
 #include "readingsmodel.h"
 #include "sensorreadingswidget.h"
 #include <thread>
+#include <iostream>
 
 extern template class SerialcomHandler<sensor_reading>;
 ReadingsModel::ReadingsModel(QObject *parent) :
@@ -47,10 +48,14 @@ QVariant ReadingsModel::data(const QModelIndex& index, int role) const
         return QVariant();
     if (index.row() >= results->size() || index.row() < 0)
         return QVariant();
+    if (index.row() < results->size() && index.row() >= 0 && role == Qt::TextAlignmentRole)
+        return Qt::AlignCenter;
     if (role == Qt::DisplayRole) {
         std::shared_ptr<sensor_reading> tmp = get_at(index.row());
+        std::cerr << *tmp << std::endl;
         switch (index.column()) {
             case 0:
+                qDebug() << tmp->s1_;
                 return tmp->s1_;
             case 1:
                 return tmp->s2_;
@@ -66,10 +71,11 @@ QVariant ReadingsModel::data(const QModelIndex& index, int role) const
 }
 
 
-QModelIndex ReadingsModel::addSensorReading(const sensor_reading& new_reading)
+QModelIndex ReadingsModel::addSensorReading(sensor_reading&& new_reading)
 {
     int rowIndex = rowCount();
     beginInsertRows(QModelIndex(), rowIndex, rowIndex);
+    std::cerr <<"new_reading: " << new_reading << std::endl;
     results->push_back(std::move(new_reading));
     endInsertRows();
     return index(rowIndex, 0);
@@ -84,7 +90,9 @@ bool ReadingsModel::isIndexValid(const QModelIndex& index) const
     return true;
 }
 
-void ReadingsModel::read_from_spsc()
+void ReadingsModel::clear()
 {
-  //  handler.start_read_spsc(results);
+    beginResetModel();
+    results->clear();
+    endResetModel();
 }

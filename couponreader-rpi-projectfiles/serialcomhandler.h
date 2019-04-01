@@ -150,6 +150,7 @@ void SerialcomHandler<T>::stop_sensors()
 
     if (producer_thread_.joinable())
         producer_thread_.join();
+    readings_.reset();
 }
 
 template <typename T>
@@ -195,6 +196,7 @@ T SerialcomHandler<T>::read_available()
     if (available_reads()) {
        T ret;
        readings_.pop(ret);
+       std::cerr << "new reading from read_available() " << ret << std::endl;
        return ret;
     }
     return T();

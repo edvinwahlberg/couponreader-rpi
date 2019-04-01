@@ -6,7 +6,7 @@
 #include "serialcomhandler.h"
 
 class ReadingsModel;
-
+class QTimer;
 namespace Ui {
 class SensorReadingsWidget;
 }
@@ -27,10 +27,13 @@ signals:
 private slots:
     void start();
     void stop();
+    void clear();
+    void get_a_reading();
 private:
     Ui::SensorReadingsWidget *ui;
     ReadingsModel* model;
     SerialcomHandler<sensor_reading> &handler;
+    QTimer *readings_timer;
 };
 
 #endif // SENSORREADINGSWIDGET_H
