@@ -148,18 +148,18 @@ Enter the Rpi:s details.
   2. **Tools -> Options -> Kits -> Compilers tab -> Add (GCC->C and GCC->C++)**\
   Add the GCC and G++ compilers from the directory we used when compiling Qt. From this guide it would be:\
   \
-  */home/kirk/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc*\
-   */home/kirk/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-g++*
+  */home/user/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc*\
+   */home/user/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-g++*
    
  3. **Tools -> Options -> Kits -> Debuggers tab -> Add**\
   Select the GDB from the directory used when compiling qt. From this guide it would be:\
  \
- */home/kirk/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-gdb*
+ */home/user/raspi/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/arm-linux-gnueabihf-gdb*
  
  4. **Tools -> Options -> Kits -> Qt Versions -> Add**\
  Select the qmake located in the recently compiled qtdirectory. From this guide it would be\
  \
- */home/kirk/raspi/qt5/bin/qmake*
+ */home/user/raspi/qt5/bin/qmake*
  
  5. **Tools -> Options -> Kits -> Kits tab -> Add (Enter the following settings)**
   > Device type: Generic Linux Device\
