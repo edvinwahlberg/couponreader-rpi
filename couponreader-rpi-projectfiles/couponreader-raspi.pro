@@ -30,7 +30,8 @@ SOURCES += \
     readingsmodel.cpp \
     sensorreadingswidget.cpp \
     mechanicaltestingwidget.cpp \
-    sensor_reading.cpp
+    sensor_reading.cpp \
+    serialcomthread.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,7 +39,8 @@ HEADERS += \
     sensorreadingswidget.h \
     mechanicaltestingwidget.h \
     sensor_reading.h \
-    serialcomhandler.h
+    serialcomhandler.h \
+    serialcomthread.h
 
 FORMS += \
         mainwindow.ui \

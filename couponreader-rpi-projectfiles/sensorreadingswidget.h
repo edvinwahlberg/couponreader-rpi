@@ -10,7 +10,10 @@ class QTimer;
 namespace Ui {
 class SensorReadingsWidget;
 }
+
+
 extern const std::string g_PATTERN;
+
 class SensorReadingsWidget : public QWidget
 {
     Q_OBJECT
@@ -20,6 +23,7 @@ class SensorReadingsWidget : public QWidget
 public:
     explicit SensorReadingsWidget(QWidget *parent = nullptr);
     ~SensorReadingsWidget();
+
 signals:
     void toggle_tab(int tab, bool enabled);
     void readings_started();

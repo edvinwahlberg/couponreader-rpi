@@ -6,6 +6,7 @@
 #include <boost/asio.hpp>
 #include <boost/asio/buffer.hpp>
 #include <boost/lockfree/spsc_queue.hpp>
+#include <boost/system/error_code.hpp>
 #include <vector>
 #include <QDebug>
 #include <regex>
@@ -13,6 +14,7 @@
 #include <initializer_list>
 
 #define BUFF_SIZE 64
+
 template <typename T>
 class SerialcomHandler
 {
@@ -23,6 +25,8 @@ class SerialcomHandler
     using command_pair = std::pair<const std::string, const std::string>;
     using spsc_queue = boost::lockfree::spsc_queue<T, boost::lockfree::capacity<1024> >;
     using size_type = typename spsc_queue::size_type;
+
+    using port_error = boost::system::error_code;
     enum PAIR_COMMANDS
     {
         START = 0,
@@ -60,13 +64,14 @@ public:
     void stop_sensors();
     bool valid_port() const { return !port_name_.empty(); }
     bool valid_regex_pattern() const { return !regex_pattern_.empty(); }
-
+    bool check_port();
     T read_available();
 
 protected:
      SerialcomHandler();
      void start_sensor_readings (const std::string, const std::string);
-     void write_command (const std::string command, std::size_t sleep_ms = SLEEP::NORMAL);
+     bool write_command (const std::string command, std::size_t sleep_ms = SLEEP::NORMAL);
+     void reset_port();
 private:
     spsc_queue          readings_;
     io_service          io_;
@@ -81,7 +86,7 @@ private:
 template <typename T>
 SerialcomHandler<T>::SerialcomHandler() :
     readings_(), io_(), port_(io_), reading_flag_(false)
-    { qDebug() << "SerialcomHandler(const std::string&, const std::string&)"; }
+    { }
 
 template <typename T>
 SerialcomHandler<T>::~SerialcomHandler()
@@ -105,21 +110,23 @@ void SerialcomHandler<T>::close()
         port_.close();
 }
 template <typename T>
-void SerialcomHandler<T>::write_command (const std::string command, std::size_t sleep_ms)
+bool SerialcomHandler<T>::write_command (const std::string command, std::size_t sleep_ms)
 {
-    try {
-        auto result = commands_.at(command);
-        std::cerr << "command: " << command << ", result: " << result << std::endl;
-        if (is_open()) {
+    auto result = commands_.at(command);
+    if (is_open()) {
+        try
+        {
             boost::asio::write( port_, boost::asio::buffer(&result, 1) );
             std::this_thread::sleep_for(std::chrono::milliseconds(sleep_ms));
+            return true;
         }
-    } catch (std::out_of_range e) {
-        std::cerr << e.what() << std::endl;
+        catch (const boost::system::system_error &e)
+        {
+            std::cerr << e.what() << std::endl;
+            return false;;
+        }
     }
-    catch(...) {
-        throw;
-    }
+    return false;
 }
 
 template <typename T>
@@ -127,7 +134,8 @@ void SerialcomHandler<T>::write_commands (const std::initializer_list<const std:
 {
     open();
     for (auto &s : command_list)
-        write_command(s, sleep_ms);
+        if (!write_command(s, sleep_ms))
+            return;
     if (close_when_done)
         close();
 }
@@ -135,47 +143,34 @@ void SerialcomHandler<T>::write_commands (const std::initializer_list<const std:
 template <typename T>
 void SerialcomHandler<T>::start_sensors(command_pair c)
 {
-    negate_read_flag();
-    std::cerr << "HELLO???" << reading_flag_ << std::endl;
-    std::cout << "UM HELLO?!?" << std::endl;
-    if (!reading_flag_)
-        return;
+    reading_flag_ = true;
     producer_thread_ = std::thread(&SerialcomHandler<T>::start_sensor_readings, this, c.first, c.second);
 }
 
 template <typename T>
 void SerialcomHandler<T>::stop_sensors()
 {
-    negate_read_flag();
-
-    if (producer_thread_.joinable())
+    reading_flag_ = false;
+    if (producer_thread_.joinable()) {
         producer_thread_.join();
-    readings_.reset();
+    }
 }
 
 template <typename T>
 void SerialcomHandler<T>::start_sensor_readings (const std::string start, const std::string stop)
 {
-    //TODO: fixa sa att om den når maxkapaciteten att den på något sätt signalerar och säger att den är färdig. annars kommer start-knappen vara låst för alltid.
-    close();
-    open();
-    std::cerr << regex_pattern_ << std::endl;
+    try {
+    reset_port();
 
-   // auto c = commands_.at(start);
     write_commands({start}, SLEEP::NORMAL, false);
-    //boost::asio::write( port_, boost::asio::buffer(&c, 1) );
-    //std::this_thread::sleep_for(std::chrono::milliseconds(100));
     std::regex r(regex_pattern_);
-
-    std::cerr << "reading flag: " << reading_flag_
-              << ", is_open: " << is_open() << ", readings_.writeAVAIL: "
-              << static_cast<int>(readings_.write_available()) << std::endl;
 
     while ( reading_flag_ && is_open() && readings_.write_available()) {
         unsigned char read_buff[BUFF_SIZE];
         read_buff[0] = '\0';
 
         auto bytes_read = boost::asio::read(port_, boost::asio::buffer(&read_buff, BUFF_SIZE));
+
         std::string buff_str(read_buff, read_buff + bytes_read);
 
         for ( std::sregex_iterator beg_it(buff_str.begin(), buff_str.end(), r), end_it;
@@ -185,9 +180,23 @@ void SerialcomHandler<T>::start_sensor_readings (const std::string start, const 
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP::NORMAL));
     }
-    //c = commands_.at(cmd.second);
-    //boost::asio::write( port_, boost::asio::buffer(&c, 1) );
     write_commands({stop}, SLEEP::SHORT, true);
+    }
+    catch (const boost::system::system_error &e)
+    {
+        reset_port();
+        std::cerr << e.what() << std::endl;
+        return;
+    }
+}
+
+template <typename T>
+bool SerialcomHandler<T>::check_port()
+{
+   port_error ret;
+   if (!is_open())
+        port_.open(port_name_, ret);
+   return !ret;
 }
 
 template <typename T>
@@ -196,10 +205,14 @@ T SerialcomHandler<T>::read_available()
     if (available_reads()) {
        T ret;
        readings_.pop(ret);
-       std::cerr << "new reading from read_available() " << ret << std::endl;
        return ret;
     }
     return T();
 }
-
+template <typename T>
+void SerialcomHandler<T>::reset_port()
+{
+    open();
+    close();
+}
 #endif // SERIALCOMHANDLER_H

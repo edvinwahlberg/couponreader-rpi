@@ -8,9 +8,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //ui->tabWidget->setTabEnabled(SENS_TAB, false);
-   // connect(ui->mech_tab, SIGNAL(toggle_tab(int,bool)), this, SLOT(setTab(int, bool)));
- //   connect(ui->sensor_tab, SIGNAL(toggle_tab(int,bool)), this, SLOT(setTab(int, bool)));
     connect(ui->mech_tab, &MechanicalTestingWidget::toggle_tab, this, &MainWindow::setTab);
     connect(ui->sensor_tab, &SensorReadingsWidget::toggle_tab, this, &MainWindow::setTab);
 }

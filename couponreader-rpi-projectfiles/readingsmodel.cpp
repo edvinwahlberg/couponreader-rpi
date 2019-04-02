@@ -6,7 +6,6 @@
 extern template class SerialcomHandler<sensor_reading>;
 ReadingsModel::ReadingsModel(QObject *parent) :
     QAbstractTableModel(parent), handler(SerialcomHandler<sensor_reading>::instance()), results(new QVector<sensor_reading>) {
-   // connect(parent, &SensorReadingsWidget::readings_started, this, &ReadingsModel::read_from_spsc);
     results->reserve(100);
 }
 
@@ -52,10 +51,8 @@ QVariant ReadingsModel::data(const QModelIndex& index, int role) const
         return Qt::AlignCenter;
     if (role == Qt::DisplayRole) {
         std::shared_ptr<sensor_reading> tmp = get_at(index.row());
-        std::cerr << *tmp << std::endl;
         switch (index.column()) {
             case 0:
-                qDebug() << tmp->s1_;
                 return tmp->s1_;
             case 1:
                 return tmp->s2_;
@@ -75,7 +72,6 @@ QModelIndex ReadingsModel::addSensorReading(sensor_reading&& new_reading)
 {
     int rowIndex = rowCount();
     beginInsertRows(QModelIndex(), rowIndex, rowIndex);
-    std::cerr <<"new_reading: " << new_reading << std::endl;
     results->push_back(std::move(new_reading));
     endInsertRows();
     return index(rowIndex, 0);

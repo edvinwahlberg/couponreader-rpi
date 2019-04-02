@@ -15,8 +15,6 @@ MechanicalTestingWidget::MechanicalTestingWidget(QWidget *parent) :
     connect(ui->stop_btn, &QPushButton::clicked, this, &MechanicalTestingWidget::stop);
     connect(ui->feed_btn, &QPushButton::clicked, this, &MechanicalTestingWidget::feed);
     connect(ui->disc_btn, &QPushButton::clicked, this, &MechanicalTestingWidget::disconnect);
-    qDebug() << "Hello?";
-   // connect(ui->start_btn, &QPushButton::clicked, this, &MechanicalTestingWidget::setSensTab)
 }
 
 MechanicalTestingWidget::~MechanicalTestingWidget()
@@ -26,6 +24,8 @@ MechanicalTestingWidget::~MechanicalTestingWidget()
 
 void MechanicalTestingWidget::start()
 {
+    if (!handler.check_port())
+        return;
     emit toggle_tab(TABS::SENS_TAB, false);
     handler.write_commands({std::string("START")}, 100);
     ui->start_btn->setEnabled(false);
@@ -34,6 +34,8 @@ void MechanicalTestingWidget::start()
 
 void MechanicalTestingWidget::stop()
 {
+    if (!handler.check_port())
+        return;
     emit toggle_tab(TABS::SENS_TAB, true);
     handler.write_commands({std::string("STOP")}, 100);
     ui->start_btn->setEnabled(true);
@@ -42,6 +44,8 @@ void MechanicalTestingWidget::stop()
 
 void MechanicalTestingWidget::feed()
 {
+    if (!handler.check_port())
+        return;
     emit toggle_tab(TABS::SENS_TAB, false);
     handler.write_commands({"ACTIVATE", "FEED"}, 500, false);
     emit toggle_tab(0, true);
